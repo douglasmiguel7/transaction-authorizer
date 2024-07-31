@@ -3,7 +3,6 @@ package com.gh.douglasmiguel7.transactionAuthorizer.account.application.output.d
 import com.gh.douglasmiguel7.transactionAuthorizer.account.application.output.database.entity.AccountEntity
 import com.gh.douglasmiguel7.transactionAuthorizer.account.application.output.database.repository.AccountRepository
 import com.gh.douglasmiguel7.transactionAuthorizer.account.core.domain.Account
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.output.DeleteAccountOutput
 import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.output.ReadAccountOutput
 import org.springframework.stereotype.Component
 

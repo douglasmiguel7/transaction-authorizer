@@ -10,7 +10,6 @@ import jakarta.persistence.Table
 import java.math.BigDecimal
 import java.sql.Types
 import java.util.UUID
-import org.hibernate.annotations.JdbcType
 import org.hibernate.annotations.JdbcTypeCode
 
 @Table(name = "account")

@@ -5,7 +5,6 @@ import com.gh.douglasmiguel7.transactionAuthorizer.account.application.output.da
 import com.gh.douglasmiguel7.transactionAuthorizer.account.core.domain.Account
 import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.output.UpdateAccountOutput
 import org.springframework.stereotype.Component
-import org.springframework.web.client.HttpClientErrorException.NotFound
 
 @Component
 class UpdateAccountAdapter(

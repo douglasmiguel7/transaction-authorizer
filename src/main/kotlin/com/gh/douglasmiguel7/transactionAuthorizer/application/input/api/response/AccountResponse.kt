@@ -1,6 +1,5 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api.response
 
-import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api.serializer.MoneySerializer
 import com.gh.douglasmiguel7.transactionAuthorizer.account.core.domain.Account
