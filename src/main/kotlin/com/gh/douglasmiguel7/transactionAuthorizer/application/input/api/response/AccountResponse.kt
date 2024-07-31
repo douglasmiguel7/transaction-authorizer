@@ -5,7 +5,7 @@ import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.seriali
 import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
 import java.math.BigDecimal
 
-data class AccountResponse (
+class AccountResponse (
   val id: String,
 
   @JsonSerialize(using = MoneySerializer::class)
