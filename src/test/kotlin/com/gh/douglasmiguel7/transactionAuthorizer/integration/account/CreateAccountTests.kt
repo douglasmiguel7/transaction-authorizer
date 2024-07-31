@@ -1,10 +1,9 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.integration
+package com.gh.douglasmiguel7.transactionAuthorizer.integration.account
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import java.math.BigDecimal
-import java.util.UUID
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -15,33 +14,28 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
-class UpdateAccountTests(
+class CreateAccountTests(
   @Autowired val mockMvc: MockMvc,
   @Autowired val testComponent: TestComponent,
   @Autowired val repository: AccountRepository,
 ) {
 
   @Test
-  fun `should update account`() {
-    val request = testComponent.accountRequest(
-      food = BigDecimal.TEN.multiply(BigDecimal("2")),
-      meal = BigDecimal.TEN.multiply(BigDecimal("2")),
-      cash = BigDecimal.TEN.multiply(BigDecimal("2")),
-    )
+  fun `should create account`() {
+    val request = testComponent.accountRequest()
     val requestBody = jacksonObjectMapper().writeValueAsString(request)
-    val id = testComponent.accountId()
 
-    mockMvc.perform(put("/accounts/${id}").content(requestBody).contentType(MediaType.APPLICATION_JSON))
-      .andExpect(status().isOk)
+    mockMvc.perform(post("/accounts").content(requestBody).contentType(MediaType.APPLICATION_JSON))
+      .andExpect(status().isCreated)
       .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("$.id").value(id.toString()))
+      .andExpect(jsonPath("$.id").isNotEmpty)
       .andExpect(jsonPath("$.food").value(request.food))
       .andExpect(jsonPath("$.meal").value(request.meal))
       .andExpect(jsonPath("$.cash").value(request.cash))
@@ -49,21 +43,10 @@ class UpdateAccountTests(
     repository.deleteAll()
   }
 
-  @Test
-  fun `should fail if id has invalid format`() {
-    val request = testComponent.accountRequest()
-    val requestBody = jacksonObjectMapper().writeValueAsString(request)
-
-    val id = "invalidIdFormat"
-
-    mockMvc.perform(put("/accounts/${id}").content(requestBody).contentType(MediaType.APPLICATION_JSON))
-      .andExpect(status().isBadRequest)
-  }
-
   @ParameterizedTest
   @MethodSource("provideFailRequestBody")
   fun `should fail if value is negative`(requestBody: String) {
-    mockMvc.perform(put("/accounts/${UUID.randomUUID()}").content(requestBody).contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(post("/accounts").content(requestBody).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isBadRequest)
   }
 
@@ -93,5 +76,4 @@ class UpdateAccountTests(
         .map { requestBody -> Arguments.of(requestBody) }
     }
   }
-
 }

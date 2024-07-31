@@ -1,8 +1,9 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.integration
+package com.gh.douglasmiguel7.transactionAuthorizer.integration.account
 
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.entity.AccountEntity
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
+import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
 import java.math.BigDecimal
 import java.math.RoundingMode.HALF_UP
 import java.util.UUID
@@ -41,5 +42,14 @@ class TestComponent(
 
   fun accountId(): UUID {
     return accountEntity().id!!
+  }
+
+  fun account(): Account {
+    return Account(
+      id = UUID.randomUUID().toString(),
+      food = BigDecimal.TEN,
+      meal = BigDecimal.TEN,
+      cash = BigDecimal.TEN,
+    )
   }
 }

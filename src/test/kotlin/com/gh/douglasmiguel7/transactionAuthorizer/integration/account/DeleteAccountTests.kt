@@ -1,4 +1,4 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.integration
+package com.gh.douglasmiguel7.transactionAuthorizer.integration.account
 
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import org.junit.jupiter.api.Test
