@@ -1,14 +1,9 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.transaction
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import com.gh.douglasmiguel7.transactionAuthorizer.integration.account.TestComponent
-import java.math.BigDecimal
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest

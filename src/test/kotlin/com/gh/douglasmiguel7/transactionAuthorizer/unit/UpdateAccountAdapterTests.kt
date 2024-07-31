@@ -1,6 +1,6 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.unit
 
-import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.UpdateAccountAdapter
+import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.adapter.account.UpdateAccountAdapter
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import com.gh.douglasmiguel7.transactionAuthorizer.integration.account.TestComponent
 import java.math.BigDecimal

@@ -1,9 +1,9 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.application.output.database
+package com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.adapter.account
 
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.entity.AccountEntity
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.output.ReadAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.ReadAccountOutput
 import org.springframework.stereotype.Component
 
 @Component

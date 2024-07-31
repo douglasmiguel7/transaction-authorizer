@@ -1,7 +1,7 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.core.port.output
+package com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.input
 
 import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
 
-interface CreateAccountOutput {
+interface CreateAccountInput {
   fun create(account: Account): Account
 }

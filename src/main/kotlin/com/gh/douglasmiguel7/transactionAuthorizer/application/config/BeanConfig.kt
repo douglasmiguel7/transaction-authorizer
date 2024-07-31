@@ -1,17 +1,17 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.application.config
 
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.CreateAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.DeleteAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.ReadAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.UpdateAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.output.CreateAccountOutput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.output.DeleteAccountOutput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.output.ReadAccountOutput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.output.UpdateAccountOutput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.usecase.CreateAccountUseCase
-import com.gh.douglasmiguel7.transactionAuthorizer.core.usecase.DeleteAccountUseCase
-import com.gh.douglasmiguel7.transactionAuthorizer.core.usecase.ReadAccountUseCase
-import com.gh.douglasmiguel7.transactionAuthorizer.core.usecase.UpdateAccountUseCase
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.input.CreateAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.input.DeleteAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.input.ReadAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.input.UpdateAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.CreateAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.DeleteAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.ReadAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.UpdateAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.usecase.account.CreateAccountUseCase
+import com.gh.douglasmiguel7.transactionAuthorizer.core.usecase.account.DeleteAccountUseCase
+import com.gh.douglasmiguel7.transactionAuthorizer.core.usecase.account.ReadAccountUseCase
+import com.gh.douglasmiguel7.transactionAuthorizer.core.usecase.account.UpdateAccountUseCase
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
