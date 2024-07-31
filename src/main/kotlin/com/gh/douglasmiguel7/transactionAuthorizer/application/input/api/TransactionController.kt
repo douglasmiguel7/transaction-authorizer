@@ -1,11 +1,9 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.application.input.api
 
-import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
-import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.response.AccountResponse
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.input.CreateAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.input.ReadAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.TransactionRequest
+import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.response.CreateTransactionResponse
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.transaction.input.CreateTransactionInput
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,19 +12,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/transactions")
 class TransactionController(
-  val createAccountInput: CreateAccountInput,
-  val readAccountInput: ReadAccountInput,
+  val createTransactionInput: CreateTransactionInput,
 ) {
 
   @PostMapping
-  fun create(@RequestBody @Valid accountRequest: AccountRequest) : AccountResponse {
-    val account = createAccountInput.create(accountRequest.toDomain())
+  fun create(@RequestBody @Valid transactionRequest: TransactionRequest) : CreateTransactionResponse {
+    val account = createTransactionInput.create(transactionRequest.toDomain())
 
-    return AccountResponse.fromDomain(account)
-  }
-
-  @GetMapping
-  fun read() : List<AccountResponse> {
-    return readAccountInput.read().map(AccountResponse::fromDomain)
+    return CreateTransactionResponse.fromDomain(account)
   }
 }

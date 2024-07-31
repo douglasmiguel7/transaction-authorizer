@@ -9,5 +9,5 @@ data class Transaction(
   val totalAmount: BigDecimal,
   val mcc: String,
   val merchant: String,
-  val code: String,
+  val code: String?,
 )

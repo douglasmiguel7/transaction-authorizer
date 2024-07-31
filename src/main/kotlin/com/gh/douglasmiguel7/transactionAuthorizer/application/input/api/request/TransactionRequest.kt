@@ -1,6 +1,7 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request
 
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.validator.AccountExists
+import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Transaction
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.PositiveOrZero
 import java.math.BigDecimal
@@ -18,4 +19,15 @@ data class TransactionRequest (
 
   @field:NotBlank
   val merchant: String,
-)
+) {
+  fun toDomain(): Transaction {
+    return Transaction(
+      id = null,
+      accountId = accountId,
+      totalAmount = totalAmount,
+      mcc = mcc,
+      merchant = merchant,
+      code = null,
+    )
+  }
+}
