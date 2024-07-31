@@ -1,6 +1,7 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.account
 
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
+import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.TransactionRequest
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.entity.AccountEntity
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
@@ -50,6 +51,15 @@ class TestComponent(
       food = BigDecimal.TEN,
       meal = BigDecimal.TEN,
       cash = BigDecimal.TEN,
+    )
+  }
+
+  fun transactionRequest(): TransactionRequest {
+    return TransactionRequest(
+      accountId = UUID.randomUUID(),
+      totalAmount = BigDecimal.TEN,
+      mcc = "",
+      merchant = ""
     )
   }
 }
