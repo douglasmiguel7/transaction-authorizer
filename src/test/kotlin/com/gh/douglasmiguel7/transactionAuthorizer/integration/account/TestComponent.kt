@@ -58,8 +58,8 @@ class TestComponent(
     return TransactionRequest(
       accountId = UUID.randomUUID(),
       totalAmount = BigDecimal.TEN,
-      mcc = "",
-      merchant = ""
+      mcc = "5411",
+      merchant = "Tatooine"
     )
   }
 }
