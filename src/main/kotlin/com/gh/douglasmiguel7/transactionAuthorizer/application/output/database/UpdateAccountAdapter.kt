@@ -1,5 +1,6 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.application.output.database
 
+import com.gh.douglasmiguel7.transactionAuthorizer.application.exception.AccountNotFound
 import com.gh.douglasmiguel7.transactionAuthorizer.application.extension.toUUID
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
@@ -10,19 +11,19 @@ import org.springframework.stereotype.Component
 class UpdateAccountAdapter(
   private val repository: AccountRepository,
 ) : UpdateAccountOutput {
-  override fun update(account: Account): Account? {
-    var entity: Account? = null
+  override fun update(account: Account): Account {
+    val optional = repository.findById(account.id!!.toUUID())
 
-    repository.findById(account.id!!.toUUID()).ifPresent {
-      val updatedEntity = it.copy(
-        food = account.food,
-        meal = account.meal,
-        cash = account.cash
-      )
-
-      entity = repository.save(updatedEntity).toDomain()
+    if (optional.isEmpty) {
+      throw AccountNotFound()
     }
 
-    return entity
+    val entity = optional.get().copy(
+      food = account.food,
+      meal = account.meal,
+      cash = account.cash
+    )
+
+    return repository.save(entity).toDomain()
   }
 }

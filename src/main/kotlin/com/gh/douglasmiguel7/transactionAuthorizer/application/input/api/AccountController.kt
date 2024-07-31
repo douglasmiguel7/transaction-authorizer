@@ -1,15 +1,15 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.application.input.api
 
-import com.gh.douglasmiguel7.transactionAuthorizer.application.extension.toUUID
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.response.AccountResponse
+import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.validator.AccountExists
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.CreateAccountInput
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.DeleteAccountInput
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.ReadAccountInput
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.UpdateAccountInput
-import org.hibernate.validator.constraints.UUID
+import jakarta.validation.Valid
+import java.util.UUID
 import org.springframework.http.HttpStatus.CREATED
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -31,7 +31,7 @@ class AccountController(
 
   @PostMapping
   @ResponseStatus(CREATED)
-  fun create(@RequestBody accountRequest: AccountRequest) : AccountResponse {
+  fun create(@RequestBody @Valid accountRequest: AccountRequest) : AccountResponse {
     val account = createAccountInput.create(accountRequest.toDomain())
 
     return AccountResponse.fromDomain(account)
@@ -43,14 +43,14 @@ class AccountController(
   }
 
   @PutMapping("/{id}")
-  fun update(@PathVariable id: String, @RequestBody accountRequest: AccountRequest) : ResponseEntity<AccountResponse> {
-    val account = updateAccountInput.update(accountRequest.toDomainWithId(id)) ?: return ResponseEntity.notFound().build()
+  fun update(@PathVariable @AccountExists id: UUID, @RequestBody @Valid accountRequest: AccountRequest) : AccountResponse {
+    val account = updateAccountInput.update(accountRequest.toDomainWithId(id.toString()))
 
-    return ResponseEntity.ok(AccountResponse.fromDomain(account))
+    return AccountResponse.fromDomain(account)
   }
 
   @DeleteMapping("/{id}")
-  fun delete(@PathVariable @UUID id: String) {
-    deleteAccountInput.delete(id.toUUID())
+  fun delete(@PathVariable @AccountExists id: UUID) {
+    deleteAccountInput.delete(id)
   }
 }
