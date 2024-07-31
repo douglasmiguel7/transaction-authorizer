@@ -1,4 +1,4 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.application.exception
+package com.gh.douglasmiguel7.transactionAuthorizer.application.exception
 
 class AccountNotFound {
 }

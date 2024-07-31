@@ -1,12 +1,12 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api
+package com.gh.douglasmiguel7.transactionAuthorizer.application.input.api
 
-import com.gh.douglasmiguel7.transactionAuthorizer.account.application.extension.toUUID
-import com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api.request.AccountRequest
-import com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api.response.AccountResponse
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.input.CreateAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.input.DeleteAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.input.ReadAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.input.UpdateAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.application.extension.toUUID
+import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
+import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.response.AccountResponse
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.CreateAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.DeleteAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.ReadAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.UpdateAccountInput
 import org.hibernate.validator.constraints.UUID
 import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.ResponseEntity

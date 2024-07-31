@@ -1,6 +1,6 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api.request
+package com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request
 
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.domain.Account
+import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
 import java.math.BigDecimal
 
 data class AccountRequest (

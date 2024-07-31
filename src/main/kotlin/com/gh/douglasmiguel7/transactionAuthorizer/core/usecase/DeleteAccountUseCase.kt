@@ -1,7 +1,7 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.core.usecase
+package com.gh.douglasmiguel7.transactionAuthorizer.core.usecase
 
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.input.DeleteAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.output.DeleteAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.DeleteAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.output.DeleteAccountOutput
 import java.util.UUID
 
 class DeleteAccountUseCase(

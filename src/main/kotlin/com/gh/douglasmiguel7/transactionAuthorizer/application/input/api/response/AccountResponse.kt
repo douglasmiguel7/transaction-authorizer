@@ -1,8 +1,8 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api.response
+package com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.response
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api.serializer.MoneySerializer
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.domain.Account
+import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.serializer.MoneySerializer
+import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
 import java.math.BigDecimal
 
 data class AccountResponse (

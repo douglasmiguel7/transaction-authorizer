@@ -1,8 +1,8 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.core.usecase
+package com.gh.douglasmiguel7.transactionAuthorizer.core.usecase
 
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.domain.Account
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.input.CreateAccountInput
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.output.CreateAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.input.CreateAccountInput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.output.CreateAccountOutput
 
 class CreateAccountUseCase(
   private val createAccountOutput: CreateAccountOutput

@@ -1,4 +1,4 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.core.domain
+package com.gh.douglasmiguel7.transactionAuthorizer.core.domain
 
 import java.math.BigDecimal
 

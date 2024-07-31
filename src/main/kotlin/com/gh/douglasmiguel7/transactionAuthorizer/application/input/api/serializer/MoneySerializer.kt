@@ -1,4 +1,4 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.application.input.api.serializer
+package com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.serializer
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.JsonSerializer

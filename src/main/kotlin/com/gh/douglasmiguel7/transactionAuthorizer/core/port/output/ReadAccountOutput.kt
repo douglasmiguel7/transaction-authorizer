@@ -1,6 +1,6 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.output
+package com.gh.douglasmiguel7.transactionAuthorizer.core.port.output
 
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.domain.Account
+import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
 
 interface ReadAccountOutput {
   fun read(): List<Account>

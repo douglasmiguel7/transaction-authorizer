@@ -1,4 +1,4 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.application.extension
+package com.gh.douglasmiguel7.transactionAuthorizer.application.extension
 
 import java.util.UUID
 

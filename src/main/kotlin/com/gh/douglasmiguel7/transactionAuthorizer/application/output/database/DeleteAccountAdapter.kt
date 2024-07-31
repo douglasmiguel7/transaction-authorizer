@@ -1,7 +1,7 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.application.output.database
+package com.gh.douglasmiguel7.transactionAuthorizer.application.output.database
 
-import com.gh.douglasmiguel7.transactionAuthorizer.account.application.output.database.repository.AccountRepository
-import com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.output.DeleteAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.output.DeleteAccountOutput
 import java.util.UUID
 import org.springframework.stereotype.Component
 

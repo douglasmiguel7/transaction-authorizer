@@ -1,4 +1,4 @@
-package com.gh.douglasmiguel7.transactionAuthorizer.account.core.port.input
+package com.gh.douglasmiguel7.transactionAuthorizer.core.port.input
 
 import java.util.UUID
 
