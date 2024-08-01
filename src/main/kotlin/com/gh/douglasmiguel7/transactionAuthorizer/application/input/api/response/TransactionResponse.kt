@@ -23,4 +23,17 @@ class ReadTransactionResponse (
   val mcc: String,
   val merchant: String,
   val code: String,
-)
+) {
+  companion object {
+    fun fromDomain(transaction: Transaction): ReadTransactionResponse {
+      return ReadTransactionResponse(
+        id = transaction.id!!,
+        accountId = transaction.accountId,
+        totalAmount = transaction.totalAmount,
+        mcc = transaction.mcc,
+        merchant = transaction.merchant,
+        code = transaction.code!!,
+      )
+    }
+  }
+}
