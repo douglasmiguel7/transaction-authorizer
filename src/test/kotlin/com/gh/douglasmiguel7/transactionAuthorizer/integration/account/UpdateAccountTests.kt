@@ -24,7 +24,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @AutoConfigureMockMvc
 class UpdateAccountTests(
   @Autowired val mockMvc: MockMvc,
-  @Autowired val testComponent: TestComponent,
+  @Autowired val testComponent: AccountTestComponent,
   @Autowired val repository: AccountRepository,
 ) {
 

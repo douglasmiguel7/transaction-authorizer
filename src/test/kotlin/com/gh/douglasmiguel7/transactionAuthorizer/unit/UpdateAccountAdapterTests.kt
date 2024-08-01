@@ -2,9 +2,8 @@ package com.gh.douglasmiguel7.transactionAuthorizer.unit
 
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.adapter.account.UpdateAccountAdapter
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
-import com.gh.douglasmiguel7.transactionAuthorizer.integration.account.TestComponent
+import com.gh.douglasmiguel7.transactionAuthorizer.integration.account.AccountTestComponent
 import java.math.BigDecimal
-import java.math.RoundingMode.HALF_UP
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -16,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDO
 class UpdateAccountAdapterTests(
   @Autowired val repository: AccountRepository,
   @Autowired val updateAccountAdapter: UpdateAccountAdapter,
-  @Autowired val testComponent: TestComponent,
+  @Autowired val testComponent: AccountTestComponent,
 ) {
 
   @Test
@@ -24,7 +23,7 @@ class UpdateAccountAdapterTests(
     val entity = testComponent.accountEntity()
 
     val domain = entity.toDomain().copy(
-      food = BigDecimal.TEN.multiply(BigDecimal("2")).setScale(2, HALF_UP)
+      food = BigDecimal("20")
     )
 
     val updatedEntity = updateAccountAdapter.update(domain)

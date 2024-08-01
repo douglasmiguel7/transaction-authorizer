@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 @AutoConfigureMockMvc
 class CreateAccountTests(
   @Autowired val mockMvc: MockMvc,
-  @Autowired val testComponent: TestComponent,
+  @Autowired val testComponent: AccountTestComponent,
   @Autowired val repository: AccountRepository,
 ) {
 

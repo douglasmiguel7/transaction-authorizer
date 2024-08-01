@@ -1,32 +1,30 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.account
 
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
-import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.TransactionRequest
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.entity.AccountEntity
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
 import java.math.BigDecimal
-import java.math.RoundingMode.HALF_UP
 import java.util.UUID
 import org.springframework.stereotype.Component
 
 @Component
-class TestComponent(
+class AccountTestComponent(
   val repository: AccountRepository,
 ) {
   fun accountRequest(): AccountRequest {
     return accountRequest(
-      food = BigDecimal.TEN,
-      meal = BigDecimal.TEN,
-      cash = BigDecimal.TEN,
+      food = BigDecimal("10.1"),
+      meal = BigDecimal("0.01"),
+      cash = BigDecimal("5.5"),
     )
   }
 
   fun accountRequest(food: BigDecimal, meal: BigDecimal, cash: BigDecimal): AccountRequest {
     return AccountRequest(
-      food = food.setScale(2, HALF_UP),
-      meal = meal.setScale(2, HALF_UP),
-      cash = cash.setScale(2, HALF_UP),
+      food = food,
+      meal = meal,
+      cash = cash,
     )
   }
 
@@ -34,9 +32,9 @@ class TestComponent(
     return repository.save(
       AccountEntity(
         id = null,
-        food = BigDecimal.TEN.setScale(2, HALF_UP),
-        meal = BigDecimal.TEN.setScale(2, HALF_UP),
-        cash = BigDecimal.TEN.setScale(2, HALF_UP),
+        food = BigDecimal("0.21"),
+        meal = BigDecimal("1.11"),
+        cash = BigDecimal("20.0"),
       )
     )
   }
@@ -48,18 +46,9 @@ class TestComponent(
   fun account(): Account {
     return Account(
       id = UUID.randomUUID().toString(),
-      food = BigDecimal.TEN,
-      meal = BigDecimal.TEN,
-      cash = BigDecimal.TEN,
-    )
-  }
-
-  fun transactionRequest(): TransactionRequest {
-    return TransactionRequest(
-      accountId = UUID.randomUUID(),
-      totalAmount = BigDecimal.TEN,
-      mcc = "5411",
-      merchant = "Tatooine"
+      food = BigDecimal("4.31"),
+      meal = BigDecimal("1.21"),
+      cash = BigDecimal("2.01"),
     )
   }
 }
