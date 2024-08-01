@@ -1,5 +1,7 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.application.config
 
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.CreateAccountOutput
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.ReadAccountOutput
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.transaction.input.CreateTransactionInput
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.transaction.input.ReadTransactionInput
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.transaction.output.CreateTransactionOutput
@@ -13,8 +15,16 @@ import org.springframework.context.annotation.Configuration
 class TransactionBeanConfig {
 
   @Bean
-  fun createTransactionInput(createTransactionOutput: CreateTransactionOutput): CreateTransactionInput {
-    return CreateTransactionUseCase(createTransactionOutput)
+  fun createTransactionInput(
+    createTransactionOutput: CreateTransactionOutput,
+    createAccountOutput: CreateAccountOutput,
+    readAccountOutput: ReadAccountOutput,
+  ): CreateTransactionInput {
+    return CreateTransactionUseCase(
+      createTransactionOutput,
+      readAccountOutput,
+      createAccountOutput,
+    )
   }
 
   @Bean
