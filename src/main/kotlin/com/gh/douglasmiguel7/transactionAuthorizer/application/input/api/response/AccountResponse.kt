@@ -1,20 +1,12 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.response
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.serializer.MoneySerializer
 import com.gh.douglasmiguel7.transactionAuthorizer.core.domain.Account
 import java.math.BigDecimal
 
 class AccountResponse (
   val id: String,
-
-  @JsonSerialize(using = MoneySerializer::class)
   val food: BigDecimal,
-
-  @JsonSerialize(using = MoneySerializer::class)
   val meal: BigDecimal,
-
-  @JsonSerialize(using = MoneySerializer::class)
   val cash: BigDecimal,
 ) {
   companion object {
