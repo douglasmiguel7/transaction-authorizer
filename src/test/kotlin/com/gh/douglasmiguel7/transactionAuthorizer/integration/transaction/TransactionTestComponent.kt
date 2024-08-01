@@ -1,7 +1,10 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.transaction
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.TransactionRequest
+import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.entity.AccountEntity
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.entity.TransactionEntity
+import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.TransactionRepository
 import java.math.BigDecimal
 import java.util.UUID
@@ -9,20 +12,38 @@ import org.springframework.stereotype.Component
 
 @Component
 class TransactionTestComponent(
-  val repository: TransactionRepository,
+  val transactionRepository: TransactionRepository,
+  val accountRepository: AccountRepository,
 ) {
 
-  fun transactionRequest(): TransactionRequest {
+  fun transactionRequest(accountId: UUID, totalAmount: String, mcc: String, merchant: String): TransactionRequest {
     return TransactionRequest(
-      accountId = UUID.randomUUID(),
-      totalAmount = BigDecimal.TEN,
-      mcc = "5411",
-      merchant = "Mercadinho Power"
+      accountId = accountId,
+      totalAmount = BigDecimal(totalAmount),
+      mcc = mcc,
+      merchant = merchant
     )
   }
 
+  fun accountEntity(food: String, meal: String, cash: String): AccountEntity {
+    return accountRepository.save(
+      AccountEntity(
+        id = null,
+        food = BigDecimal(food),
+        meal = BigDecimal(meal),
+        cash = BigDecimal(cash),
+      )
+    )
+  }
+
+  fun transactionRequestBody(totalAmount: String, mcc: String, merchant: String, food: String, meal: String, cash: String): String {
+    val entity = accountEntity(food, meal, cash)
+    val request = transactionRequest(entity.id!!, totalAmount, mcc, merchant)
+    return jacksonObjectMapper().writeValueAsString(request)
+  }
+
   fun transactionEntity(): TransactionEntity {
-    return repository.save(
+    return transactionRepository.save(
       TransactionEntity(
         id = null,
         accountId = UUID.randomUUID(),
@@ -32,5 +53,10 @@ class TransactionTestComponent(
         code = "00",
       )
     )
+  }
+
+  fun cleanDatabase() {
+    transactionRepository.deleteAll()
+    accountRepository.deleteAll()
   }
 }

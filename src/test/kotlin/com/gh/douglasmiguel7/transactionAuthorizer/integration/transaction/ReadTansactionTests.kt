@@ -1,6 +1,5 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.transaction
 
-import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.TransactionRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class ReadTansactionTests(
   @Autowired val mockMvc: MockMvc,
   @Autowired val testComponent: TransactionTestComponent,
-  @Autowired val repository: TransactionRepository,
 ) {
 
   @Test
@@ -36,7 +34,7 @@ class ReadTansactionTests(
       .andExpect(jsonPath("$[0].merchant").value(entity.merchant))
       .andExpect(jsonPath("$[0].code").value(entity.code))
 
-    repository.deleteAll()
+    testComponent.cleanDatabase()
   }
 
 }
