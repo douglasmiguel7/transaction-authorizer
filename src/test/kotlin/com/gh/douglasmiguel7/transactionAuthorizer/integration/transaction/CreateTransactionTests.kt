@@ -1,7 +1,7 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.transaction
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
+import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.TransactionRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class CreateTransactionTests(
   @Autowired val mockMvc: MockMvc,
   @Autowired val testComponent: TransactionTestComponent,
-  @Autowired val repository: AccountRepository,
+  @Autowired val repository: TransactionRepository,
 ) {
 
   @Test
