@@ -40,10 +40,10 @@ data class TransactionEntity(
     fun fromDomain(transaction: Transaction) : TransactionEntity {
       return TransactionEntity(
         id = transaction.id,
-        accountId = transaction.accountId,
-        totalAmount = transaction.totalAmount,
-        mcc = transaction.mcc,
-        merchant = transaction.merchant,
+        accountId = transaction.accountId!!,
+        totalAmount = transaction.totalAmount!!,
+        mcc = transaction.mcc!!,
+        merchant = transaction.merchant!!,
         code = transaction.code!!,
       )
     }

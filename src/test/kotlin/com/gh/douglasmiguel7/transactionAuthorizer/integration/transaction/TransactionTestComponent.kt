@@ -12,14 +12,14 @@ import org.springframework.stereotype.Component
 
 @Component
 class TransactionTestComponent(
-  val transactionRepository: TransactionRepository,
-  val accountRepository: AccountRepository,
+  private val transactionRepository: TransactionRepository,
+  private val accountRepository: AccountRepository,
 ) {
 
-  fun transactionRequest(accountId: UUID, totalAmount: String, mcc: String, merchant: String): TransactionRequest {
+  fun transactionRequest(accountId: UUID?, totalAmount: String?, mcc: String?, merchant: String?): TransactionRequest {
     return TransactionRequest(
       accountId = accountId,
-      totalAmount = BigDecimal(totalAmount),
+      totalAmount = totalAmount?.let { BigDecimal(it) },
       mcc = mcc,
       merchant = merchant
     )
@@ -36,9 +36,8 @@ class TransactionTestComponent(
     )
   }
 
-  fun transactionRequestBody(totalAmount: String, mcc: String, merchant: String, food: String, meal: String, cash: String): String {
-    val entity = accountEntity(food, meal, cash)
-    val request = transactionRequest(entity.id!!, totalAmount, mcc, merchant)
+  fun transactionRequestBody(accountId: UUID?, totalAmount: String?, mcc: String?, merchant: String?): String {
+    val request = transactionRequest(accountId, totalAmount, mcc, merchant)
     return jacksonObjectMapper().writeValueAsString(request)
   }
 

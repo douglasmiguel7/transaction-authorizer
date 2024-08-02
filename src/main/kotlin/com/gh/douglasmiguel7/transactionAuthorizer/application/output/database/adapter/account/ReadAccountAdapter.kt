@@ -18,4 +18,8 @@ class ReadAccountAdapter(
   override fun getById(id: UUID): Account {
     return repository.findById(id).get().toDomain()
   }
+
+  override fun existsById(id: UUID): Boolean {
+    return repository.existsById(id)
+  }
 }

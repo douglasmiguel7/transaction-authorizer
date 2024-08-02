@@ -4,6 +4,7 @@ import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.Mcc.CASH
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.Mcc.FOOD
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.Mcc.MEAL
 
+// can be loaded by environment variable in the future
 enum class Merchant(
   val title: String,
   val mcc: Mcc,

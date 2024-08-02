@@ -1,5 +1,6 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.core.enumx
 
+// can be loaded by environment variable in the future
 enum class Mcc(
   val codes: List<String> = listOf(),
 ) {

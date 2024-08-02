@@ -16,23 +16,29 @@ class CreateTransactionUseCase(
 ) : CreateTransactionInput {
 
   private fun getMcc(transaction: Transaction): Mcc {
-    var mcc = Merchant.getMerchantMccByTitle(transaction.merchant)
+    var mcc = Merchant.getMerchantMccByTitle(transaction.merchant!!)
 
     if (mcc != null) {
       return mcc
     }
 
-    mcc = Mcc.getMccByCode(transaction.mcc)
+    mcc = Mcc.getMccByCode(transaction.mcc!!)
 
     return  mcc ?: CASH
   }
 
   override fun create(transaction: Transaction): Transaction {
+    val valid = transaction.isValid(readAccouOutput)
+
+    if (!valid) {
+      return transaction.rejectWithUnknownCode()
+    }
+
     val mcc = getMcc(transaction)
 
-    val account = readAccouOutput.getById(transaction.accountId)
+    val account = readAccouOutput.getById(transaction.accountId!!)
 
-    if (!account.hasFundsByMcc(mcc, transaction.totalAmount)) {
+    if (!account.hasFundsByMcc(mcc, transaction.totalAmount!!)) {
       return createTransactionOutput.create(
         transaction.withMcc(mcc).rejectWithNotEnoughFundsCode()
       )

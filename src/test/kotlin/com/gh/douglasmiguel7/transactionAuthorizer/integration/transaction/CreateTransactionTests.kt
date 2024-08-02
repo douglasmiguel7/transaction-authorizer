@@ -1,5 +1,10 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.transaction
 
+import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode
+import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode.APPROVED
+import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode.NOT_ENOUGH_FUNDS
+import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode.UNKNOWN
+import java.util.UUID
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -10,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDO
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers.print
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -21,37 +27,56 @@ class CreateTransactionTests(
   @Autowired val testComponent: TransactionTestComponent,
 ) {
 
-  fun createRequestBody(testCase: TestCase): String {
-    return testComponent.transactionRequestBody(
-      totalAmount = testCase.transaction.totalAmount,
-      mcc = testCase.transaction.mcc,
-      merchant = testCase.transaction.merchant,
+  @ParameterizedTest
+  @MethodSource("provideValidationTestCases")
+  fun `should approve or reject transaction based on validation`(testCase: TestCase) {
+    val entity = testComponent.accountEntity(
       food = testCase.account.food,
       meal = testCase.account.meal,
       cash = testCase.account.cash,
     )
-  }
 
-  @ParameterizedTest
-  @MethodSource("provideMccTestCase")
-  fun `should approve or reject transaction based on mcc`(testCase: TestCase) {
-    val requestBody = createRequestBody(testCase)
+    val requestBody = testComponent.transactionRequestBody(
+      accountId = entity.id!!,
+      totalAmount = testCase.transaction.totalAmount,
+      mcc = testCase.transaction.mcc,
+      merchant = testCase.transaction.merchant,
+    )
 
     mockMvc.perform(post("/transactions").content(requestBody).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk)
       .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-      .andExpect(jsonPath("$.code").value(testCase.expectedCode))
+      .andExpect(jsonPath("$.code").value(testCase.expectedCode.code))
+      .andDo(print())
 
     testComponent.cleanDatabase()
   }
 
+  @ParameterizedTest
+  @MethodSource("provideUnknownResponseCodeTestCases")
+  fun `should reject transaction with code 07`(testCase: TestCase) {
+    val requestBody = testComponent.transactionRequestBody(
+      accountId = testCase.account.id,
+      totalAmount = testCase.transaction.totalAmount,
+      mcc = testCase.transaction.mcc,
+      merchant = testCase.transaction.merchant,
+    )
+
+    mockMvc.perform(post("/transactions").content(requestBody).contentType(MediaType.APPLICATION_JSON))
+      .andExpect(status().isOk)
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(jsonPath("$.code").value(testCase.expectedCode.code))
+      .andDo(print())
+  }
+
   data class TransactionInfo(
-    val totalAmount: String,
-    val mcc: String,
-    val merchant: String,
+    val totalAmount: String?,
+    val mcc: String?,
+    val merchant: String?,
   )
 
   data class AccountInfo(
+    val id: UUID? = null,
     val food: String,
     val meal: String,
     val cash: String,
@@ -60,11 +85,11 @@ class CreateTransactionTests(
   data class TestCase(
     val transaction: TransactionInfo,
     val account: AccountInfo,
-    val expectedCode: String,
+    val expectedCode: TransactionCode,
   )
 
   companion object {
-    private fun unknownMcc(funds: String, totalAmount: String, expectedCode: String): Arguments {
+    private fun unknownMcc(funds: String, totalAmount: String, expectedCode: TransactionCode): Arguments {
       return Arguments.of(
         TestCase(
           transaction = TransactionInfo(
@@ -82,7 +107,7 @@ class CreateTransactionTests(
       )
     }
 
-    private fun food(mcc: String, funds: String, cash: String, totalAmount: String, expectedCode: String): Arguments {
+    private fun food(mcc: String, funds: String, cash: String, totalAmount: String, expectedCode: TransactionCode): Arguments {
       return Arguments.of(
         TestCase(
           transaction = TransactionInfo(
@@ -100,7 +125,7 @@ class CreateTransactionTests(
       )
     }
 
-    private fun meal(mcc: String, funds: String, cash: String, totalAmount: String, expectedCode: String): Arguments {
+    private fun meal(mcc: String, funds: String, cash: String, totalAmount: String, expectedCode: TransactionCode): Arguments {
       return Arguments.of(
         TestCase(
           transaction = TransactionInfo(
@@ -118,7 +143,7 @@ class CreateTransactionTests(
       )
     }
 
-    private fun mart(funds: String, cash: String, totalAmount: String, expectedCode: String): Arguments {
+    private fun mart(funds: String, cash: String, totalAmount: String, expectedCode: TransactionCode): Arguments {
       return Arguments.of(
         TestCase(
           transaction = TransactionInfo(
@@ -136,7 +161,7 @@ class CreateTransactionTests(
       )
     }
 
-    private fun restaurant(funds: String, cash: String, totalAmount: String, expectedCode: String): Arguments {
+    private fun restaurant(funds: String, cash: String, totalAmount: String, expectedCode: TransactionCode): Arguments {
       return Arguments.of(
         TestCase(
           transaction = TransactionInfo(
@@ -154,10 +179,29 @@ class CreateTransactionTests(
       )
     }
 
+    private fun unknownCodeCase(totalAmount: String?, mcc: String?, merchant: String?, accountId: UUID?): Arguments {
+      return Arguments.of(
+        TestCase(
+          transaction = TransactionInfo(
+            totalAmount = totalAmount,
+            mcc = mcc,
+            merchant = merchant,
+          ),
+          account = AccountInfo(
+            id = accountId,
+            food = "0",
+            meal = "0",
+            cash = "0",
+          ),
+          expectedCode = UNKNOWN,
+        )
+      )
+    }
+
     @JvmStatic
-    fun provideMccTestCase(): List<Arguments> {
-      val approved = "00"
-      val notEnoughFunds = "51"
+    fun provideValidationTestCases(): List<Arguments> {
+      val approved = APPROVED
+      val notEnoughFunds = NOT_ENOUGH_FUNDS
 
       return listOf(
         // approved cases
@@ -193,6 +237,23 @@ class CreateTransactionTests(
         mart(funds = "10", cash = "0", totalAmount = "50", expectedCode = notEnoughFunds),
 
         restaurant(funds = "10", cash = "0", totalAmount = "50", expectedCode = notEnoughFunds),
+      )
+    }
+
+    @JvmStatic
+    fun provideUnknownResponseCodeTestCases(): List<Arguments>  {
+      return listOf(
+        unknownCodeCase(totalAmount = null, mcc = null, merchant = null, accountId = null),
+
+        unknownCodeCase(totalAmount = null, mcc = null, merchant = null, accountId = UUID.randomUUID()),
+
+        unknownCodeCase(totalAmount = null, mcc = null, merchant = "unknown", accountId = UUID.randomUUID()),
+
+        unknownCodeCase(totalAmount = null, mcc = "unknown", merchant = "unknown", accountId = UUID.randomUUID()),
+
+        unknownCodeCase(totalAmount = "0", mcc = "unknown", merchant = "unknown", accountId = UUID.randomUUID()),
+
+        unknownCodeCase(totalAmount = "10", mcc = "unknown", merchant = "unknown", accountId = UUID.randomUUID()),
       )
     }
   }

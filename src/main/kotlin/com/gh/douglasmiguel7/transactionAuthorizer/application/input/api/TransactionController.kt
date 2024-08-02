@@ -5,7 +5,6 @@ import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.respons
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.response.ReadTransactionResponse
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.transaction.input.CreateTransactionInput
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.transaction.input.ReadTransactionInput
-import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -20,7 +19,7 @@ class TransactionController(
 ) {
 
   @PostMapping
-  fun create(@RequestBody @Valid transactionRequest: TransactionRequest) : CreateTransactionResponse {
+  fun create(@RequestBody transactionRequest: TransactionRequest) : CreateTransactionResponse {
     val account = createTransactionInput.create(transactionRequest.toDomain())
 
     return CreateTransactionResponse.fromDomain(account)

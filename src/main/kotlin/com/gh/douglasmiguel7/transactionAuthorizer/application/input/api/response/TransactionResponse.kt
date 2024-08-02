@@ -28,10 +28,10 @@ class ReadTransactionResponse (
     fun fromDomain(transaction: Transaction): ReadTransactionResponse {
       return ReadTransactionResponse(
         id = transaction.id!!,
-        accountId = transaction.accountId,
-        totalAmount = transaction.totalAmount,
-        mcc = transaction.mcc,
-        merchant = transaction.merchant,
+        accountId = transaction.accountId!!,
+        totalAmount = transaction.totalAmount!!,
+        mcc = transaction.mcc!!,
+        merchant = transaction.merchant!!,
         code = transaction.code!!,
       )
     }
