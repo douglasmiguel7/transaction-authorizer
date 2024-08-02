@@ -18,7 +18,7 @@ class TransactionController(
   val readTransactionInput: ReadTransactionInput,
 ) {
 
-  @PostMapping
+  @PostMapping("/validate")
   fun create(@RequestBody transactionRequest: TransactionRequest) : CreateTransactionResponse {
     val account = createTransactionInput.create(transactionRequest.toDomain())
 

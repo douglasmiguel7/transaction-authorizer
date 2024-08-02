@@ -43,7 +43,7 @@ class CreateTransactionTests(
       merchant = testCase.transaction.merchant,
     )
 
-    mockMvc.perform(post("/transactions").content(requestBody).contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(post("/transactions/validate").content(requestBody).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk)
       .andExpect(content().contentType(MediaType.APPLICATION_JSON))
       .andExpect(jsonPath("$.code").value(testCase.expectedCode.code))
@@ -62,7 +62,7 @@ class CreateTransactionTests(
       merchant = testCase.transaction.merchant,
     )
 
-    mockMvc.perform(post("/transactions").content(requestBody).contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(post("/transactions/validate").content(requestBody).contentType(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk)
       .andExpect(content().contentType(MediaType.APPLICATION_JSON))
       .andExpect(jsonPath("$.code").value(testCase.expectedCode.code))
