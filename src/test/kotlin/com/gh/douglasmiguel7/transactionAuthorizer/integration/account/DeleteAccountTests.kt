@@ -1,6 +1,5 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.account
 
-import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -15,7 +14,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class DeleteAccountTests(
   @Autowired val mockMvc: MockMvc,
   @Autowired val testComponent: AccountTestComponent,
-  @Autowired val repository: AccountRepository,
 ) {
 
   @Test
@@ -25,7 +23,7 @@ class DeleteAccountTests(
     mockMvc.perform(delete("/accounts/${id}"))
       .andExpect(status().isOk)
 
-    repository.deleteAll()
+    testComponent.cleanDatabase()
   }
 
   @Test

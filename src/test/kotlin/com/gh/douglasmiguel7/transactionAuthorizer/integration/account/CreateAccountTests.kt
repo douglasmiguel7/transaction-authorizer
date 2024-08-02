@@ -2,7 +2,6 @@ package com.gh.douglasmiguel7.transactionAuthorizer.integration.account
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.gh.douglasmiguel7.transactionAuthorizer.application.input.api.request.AccountRequest
-import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import java.math.BigDecimal
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -24,7 +23,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class CreateAccountTests(
   @Autowired val mockMvc: MockMvc,
   @Autowired val testComponent: AccountTestComponent,
-  @Autowired val repository: AccountRepository,
 ) {
 
   @Test
@@ -40,7 +38,7 @@ class CreateAccountTests(
       .andExpect(jsonPath("$.meal").value(request.meal))
       .andExpect(jsonPath("$.cash").value(request.cash))
 
-    repository.deleteAll()
+    testComponent.cleanDatabase()
   }
 
   @ParameterizedTest

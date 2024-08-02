@@ -51,4 +51,8 @@ class AccountTestComponent(
       cash = BigDecimal("2.01"),
     )
   }
+
+  fun cleanDatabase() {
+    repository.deleteAll()
+  }
 }

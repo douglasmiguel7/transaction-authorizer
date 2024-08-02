@@ -1,6 +1,5 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.account
 
-import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -18,7 +17,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 class ReadAccountTests(
   @Autowired val mockMvc: MockMvc,
   @Autowired val testComponent: AccountTestComponent,
-  @Autowired val repository: AccountRepository,
 ) {
 
   @Test
@@ -34,7 +32,7 @@ class ReadAccountTests(
       .andExpect(jsonPath("$[0].meal").value(entity.meal))
       .andExpect(jsonPath("$[0].cash").value(entity.cash))
 
-    repository.deleteAll()
+    testComponent.cleanDatabase()
   }
 
   @Test
@@ -49,7 +47,7 @@ class ReadAccountTests(
       .andExpect(jsonPath("$.meal").value(entity.meal))
       .andExpect(jsonPath("$.cash").value(entity.cash))
 
-    repository.deleteAll()
+    testComponent.cleanDatabase()
   }
 
 }
