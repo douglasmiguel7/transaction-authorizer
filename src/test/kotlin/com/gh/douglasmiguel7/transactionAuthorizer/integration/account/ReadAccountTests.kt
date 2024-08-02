@@ -37,4 +37,19 @@ class ReadAccountTests(
     repository.deleteAll()
   }
 
+  @Test
+  fun `should get account by id`() {
+    val entity = testComponent.accountEntity()
+
+    mockMvc.perform(get("/accounts/${entity.id}"))
+      .andExpect(status().isOk)
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(jsonPath("$.id").value(entity.id.toString()))
+      .andExpect(jsonPath("$.food").value(entity.food))
+      .andExpect(jsonPath("$.meal").value(entity.meal))
+      .andExpect(jsonPath("$.cash").value(entity.cash))
+
+    repository.deleteAll()
+  }
+
 }
