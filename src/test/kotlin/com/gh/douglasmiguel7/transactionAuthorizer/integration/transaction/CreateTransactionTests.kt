@@ -1,5 +1,6 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.integration.transaction
 
+import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.entity.AccountEntity
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode.APPROVED
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode.NOT_ENOUGH_FUNDS
@@ -55,8 +56,18 @@ class CreateTransactionTests(
   @ParameterizedTest
   @MethodSource("provideUnknownResponseCodeTestCases")
   fun `should reject transaction with code 07`(testCase: TestCase) {
+    var account: AccountEntity? = null
+
+    if (testCase.account.createAccount) {
+      account = testComponent.accountEntity(
+        food = testCase.account.food,
+        meal = testCase.account.meal,
+        cash = testCase.account.cash
+      )
+    }
+
     val requestBody = testComponent.transactionRequestBody(
-      accountId = testCase.account.id,
+      accountId = account?.id ?: testCase.account.id,
       totalAmount = testCase.transaction.totalAmount,
       mcc = testCase.transaction.mcc,
       merchant = testCase.transaction.merchant,
@@ -76,6 +87,7 @@ class CreateTransactionTests(
   )
 
   data class AccountInfo(
+    val createAccount: Boolean = false,
     val id: UUID? = null,
     val food: String,
     val meal: String,
@@ -179,7 +191,7 @@ class CreateTransactionTests(
       )
     }
 
-    private fun unknownCodeCase(totalAmount: String?, mcc: String?, merchant: String?, accountId: UUID?): Arguments {
+    private fun unknownCodeCase(totalAmount: String?, mcc: String?, merchant: String?, accountId: UUID? = null, createAccount: Boolean): Arguments {
       return Arguments.of(
         TestCase(
           transaction = TransactionInfo(
@@ -188,6 +200,7 @@ class CreateTransactionTests(
             merchant = merchant,
           ),
           account = AccountInfo(
+            createAccount = createAccount,
             id = accountId,
             food = "0",
             meal = "0",
@@ -243,17 +256,15 @@ class CreateTransactionTests(
     @JvmStatic
     fun provideUnknownResponseCodeTestCases(): List<Arguments>  {
       return listOf(
-        unknownCodeCase(totalAmount = null, mcc = null, merchant = null, accountId = null),
+        unknownCodeCase(totalAmount = null, mcc = null, merchant = null, accountId = null, createAccount = false),
 
-        unknownCodeCase(totalAmount = null, mcc = null, merchant = null, accountId = UUID.randomUUID()),
+        unknownCodeCase(totalAmount = null, mcc = null, merchant = null, accountId = UUID.randomUUID(), createAccount = false),
 
-        unknownCodeCase(totalAmount = null, mcc = null, merchant = "unknown", accountId = UUID.randomUUID()),
+        unknownCodeCase(totalAmount = null, mcc = null, merchant = "unknown", createAccount = true),
 
-        unknownCodeCase(totalAmount = null, mcc = "unknown", merchant = "unknown", accountId = UUID.randomUUID()),
+        unknownCodeCase(totalAmount = null, mcc = "unknown", merchant = "unknown", createAccount = true),
 
-        unknownCodeCase(totalAmount = "0", mcc = "unknown", merchant = "unknown", accountId = UUID.randomUUID()),
-
-        unknownCodeCase(totalAmount = "10", mcc = "unknown", merchant = "unknown", accountId = UUID.randomUUID()),
+        unknownCodeCase(totalAmount = "-1", mcc = "unknown", merchant = "unknown", createAccount = true),
       )
     }
   }

@@ -19,7 +19,7 @@ data class Transaction(
   fun isValid(readAccountOutput: ReadAccountOutput): Boolean {
     if (accountId == null || !readAccountOutput.existsById(accountId)) return false
 
-    if (BigDecimal.ZERO > totalAmount) return false
+    if (totalAmount == null || BigDecimal.ZERO > totalAmount) return false
 
     if (mcc.isNullOrBlank()) return false
 
