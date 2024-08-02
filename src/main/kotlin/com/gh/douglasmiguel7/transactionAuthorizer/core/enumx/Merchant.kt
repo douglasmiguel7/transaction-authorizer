@@ -13,5 +13,13 @@ enum class Merchant(
   PICPAY(title = "picpay", mcc = CASH),
   PAG(title = "pag", mcc = CASH),
   MART(title = "mercado", mcc = FOOD),
-  RESTAURANT(title = "restaurante", mcc = MEAL),
+  RESTAURANT(title = "restaurante", mcc = MEAL);
+
+  companion object {
+    fun getMerchantMccByTitle(searchString: String): Mcc? {
+      return entries.find {
+        entry -> entry.title.contains(searchString)
+      }?.mcc
+    }
+  }
 }

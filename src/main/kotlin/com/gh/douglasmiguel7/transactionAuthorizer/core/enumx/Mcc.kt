@@ -5,5 +5,13 @@ enum class Mcc(
 ) {
   FOOD(codes = listOf("5411", "5412")),
   MEAL(codes = listOf("5811", "5812")),
-  CASH,
+  CASH;
+
+  companion object {
+    fun getMccByCode(searchString: String): Mcc? {
+      return entries.find {
+        entry -> entry.codes.any { code -> code == searchString }
+      }
+    }
+  }
 }
