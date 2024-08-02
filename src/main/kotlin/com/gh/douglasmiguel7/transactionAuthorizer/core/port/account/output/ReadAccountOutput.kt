@@ -5,6 +5,6 @@ import java.util.UUID
 
 interface ReadAccountOutput {
   fun read(): List<Account>
-  fun getById(id: UUID): Account
+  fun readById(id: UUID): Account
   fun existsById(id: UUID): Boolean
 }

@@ -15,7 +15,7 @@ class ReadAccountAdapter(
     return repository.findAll().map(AccountEntity::toDomain)
   }
 
-  override fun getById(id: UUID): Account {
+  override fun readById(id: UUID): Account {
     return repository.findById(id).get().toDomain()
   }
 

@@ -36,7 +36,7 @@ class CreateTransactionUseCase(
 
     val mcc = getMcc(transaction)
 
-    val account = readAccouOutput.getById(transaction.accountId!!)
+    val account = readAccouOutput.readById(transaction.accountId!!)
 
     if (!account.hasFundsByMcc(mcc, transaction.totalAmount!!)) {
       return createTransactionOutput.create(

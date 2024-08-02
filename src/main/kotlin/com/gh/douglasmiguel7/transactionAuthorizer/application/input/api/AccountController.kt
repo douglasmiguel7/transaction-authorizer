@@ -42,6 +42,11 @@ class AccountController(
     return readAccountInput.read().map(AccountResponse::fromDomain)
   }
 
+  @GetMapping("/{id}")
+  fun read(@PathVariable @AccountExists id: UUID) : AccountResponse {
+    return AccountResponse.fromDomain(readAccountInput.readById(id))
+  }
+
   @PutMapping("/{id}")
   fun update(@PathVariable @AccountExists id: UUID, @RequestBody @Valid accountRequest: AccountRequest) : AccountResponse {
     val account = updateAccountInput.update(accountRequest.toDomainWithId(id.toString()))
