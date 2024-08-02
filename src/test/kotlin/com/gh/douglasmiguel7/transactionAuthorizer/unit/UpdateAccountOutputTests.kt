@@ -1,7 +1,6 @@
 package com.gh.douglasmiguel7.transactionAuthorizer.unit
 
-import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.adapter.account.UpdateAccountAdapter
-import com.gh.douglasmiguel7.transactionAuthorizer.application.output.database.repository.AccountRepository
+import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.UpdateAccountOutput
 import com.gh.douglasmiguel7.transactionAuthorizer.integration.account.AccountTestComponent
 import java.math.BigDecimal
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -12,9 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class UpdateAccountAdapterTests(
-  @Autowired val repository: AccountRepository,
-  @Autowired val updateAccountAdapter: UpdateAccountAdapter,
+class UpdateAccountOutputTests(
+  @Autowired val updateAccountOutput: UpdateAccountOutput,
   @Autowired val testComponent: AccountTestComponent,
 ) {
 
@@ -26,13 +24,13 @@ class UpdateAccountAdapterTests(
       food = BigDecimal("20")
     )
 
-    val updatedEntity = updateAccountAdapter.update(domain)
+    val updatedEntity = updateAccountOutput.update(domain)
 
     assertEquals(domain.food, updatedEntity.food)
     assertEquals(domain.meal, updatedEntity.meal)
     assertEquals(domain.cash, updatedEntity.cash)
 
-    repository.deleteAll()
+    testComponent.cleanDatabase()
   }
 
   @Test
@@ -40,7 +38,7 @@ class UpdateAccountAdapterTests(
     val account = testComponent.account()
 
     assertThrows<Exception> {
-      updateAccountAdapter.update(account)
+      updateAccountOutput.update(account)
     }
   }
 
