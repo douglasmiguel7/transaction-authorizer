@@ -5,6 +5,7 @@ import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.Mcc
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.Mcc.CASH
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.Mcc.FOOD
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.Mcc.MEAL
+import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.Merchant
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode.APPROVED
 import com.gh.douglasmiguel7.transactionAuthorizer.core.enumx.TransactionCode.NOT_ENOUGH_FUNDS
 import com.gh.douglasmiguel7.transactionAuthorizer.core.port.account.output.CreateAccountOutput
@@ -20,13 +21,15 @@ class CreateTransactionUseCase(
 ) : CreateTransactionInput {
 
   private fun getMcc(transaction: Transaction): Mcc {
-    val mcc = Mcc.entries.find {
-      entry -> entry.codes.any {
-        code -> code == transaction.mcc
-      }
+    var mcc = Merchant.entries.find { entry -> entry.title.contains(transaction.merchant) }?.mcc
+
+    if (mcc != null) {
+      return mcc
     }
 
-    return mcc ?: CASH
+    mcc = Mcc.entries.find { entry -> entry.codes.any { code -> code == transaction.mcc } }
+
+    return  mcc ?: CASH
   }
 
   private fun hasFunds(mcc: Mcc, transaction: Transaction): Boolean {
@@ -83,7 +86,7 @@ class CreateTransactionUseCase(
     val hasFunds = hasFunds(mcc, transaction)
 
     if (!hasFunds) {
-      return createTransactionOutput.create(transaction.copy(code = NOT_ENOUGH_FUNDS.code))
+      return createTransactionOutput.create(transaction.copy(mcc = mcc.name, code = NOT_ENOUGH_FUNDS.code))
     }
 
     val account = readAccouOutput.getById(transaction.accountId)
@@ -98,7 +101,7 @@ class CreateTransactionUseCase(
 
     createAccountOutput.create(account.copy(food = food, meal = meal, cash = cash))
 
-    return createTransactionOutput.create(transaction.copy(code = APPROVED.code))
+    return createTransactionOutput.create(transaction.copy(mcc = mcc.name, code = APPROVED.code))
   }
 
 }
