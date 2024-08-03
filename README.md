@@ -21,12 +21,11 @@ You can find the documentation in the link listed in the [Useful Links](#useful-
 
 You can validate a transaction (see the documentation in the [Useful Links](#useful-links) section) by sending:
 
-```
+```json
 POST /transactions/validate
 {
     "accountId": "<previously created account id>",
     "totalAmount": "<transaction amount>",
-    "accountId": "<previously created account id>",
     "mcc": "<mcc code>",
     "merchant": "<merchant name>"
 }
@@ -35,17 +34,17 @@ POST /transactions/validate
 The response status code will always be `200 OK`, but with different codes:
 
 Approved:
-```
+```json
 { "code": "00" }
 ```
 
 Not enough funds:
-```
+```json
 { "code": "51" }
 ```
 
 Other problems:
-```
+```json
 { "code": "07" }
 ```
 
