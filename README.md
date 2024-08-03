@@ -61,6 +61,8 @@ In this scenario, we can do two things:
 
 Below, you can see a simple diagram to illustrate the idea
 
+![image](https://github.com/user-attachments/assets/5f003678-20d0-404a-a8fc-966a7bd591fa)
+
 ## About
 
 This repository was created for the Caju technical challenge
