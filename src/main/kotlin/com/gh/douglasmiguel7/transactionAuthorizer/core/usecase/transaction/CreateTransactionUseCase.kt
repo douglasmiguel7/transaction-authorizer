@@ -15,14 +15,14 @@ class CreateTransactionUseCase(
   private val createAccountOutput: CreateAccountOutput,
 ) : CreateTransactionInput {
 
-  private fun getMcc(transaction: Transaction): Mcc {
-    var mcc = Merchant.getMerchantMccByTitle(transaction.merchant!!)
+  fun getMcc(transaction: Transaction): Mcc {
+    var mcc = transaction.merchant?.let { Merchant.getMerchantMccByTitle(it) }
 
     if (mcc != null) {
       return mcc
     }
 
-    mcc = Mcc.getMccByCode(transaction.mcc!!)
+    mcc = transaction.mcc?.let { Mcc.getMccByCode(it) }
 
     return  mcc ?: CASH
   }

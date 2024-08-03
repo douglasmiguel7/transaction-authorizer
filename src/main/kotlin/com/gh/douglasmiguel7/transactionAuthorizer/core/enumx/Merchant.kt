@@ -9,8 +9,8 @@ enum class Merchant(
   val title: String,
   val mcc: Mcc,
 ) {
-  UBER_TRIP(title = "uber trip", mcc = CASH),
-  UBER_EATS(title = "uber eats", mcc = MEAL),
+  UBER_TRIP(title = "trip", mcc = CASH),
+  UBER_EATS(title = "eats", mcc = MEAL),
   PICPAY(title = "picpay", mcc = CASH),
   PAG(title = "pag", mcc = CASH),
   MART(title = "mercado", mcc = FOOD),
