@@ -59,7 +59,9 @@ In this scenario, we can do two things:
 1. New transactions wait for the account to be unlocked
 2. New transactions are immediately rejected with code 07
 
-Below, you can see a simple diagram to illustrate the idea
+Below, you can see a simple diagram to illustrate the idea:
+
+If you would like, you can view this diagram on Excalidraw: https://excalidraw.com/#json=Ghp-x1wkcCUIkPlJTHAP0,cZcDdm3P6iZaT_4J64pfyw
 
 ![image](https://github.com/user-attachments/assets/5f003678-20d0-404a-a8fc-966a7bd591fa)
 
