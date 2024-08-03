@@ -49,6 +49,18 @@ Other problems:
 { "code": "07" }
 ```
 
+## Avoiding duplicate transactions
+
+We can implement the capability to prevent transaction duplication in a future feature
+
+My first idea is to use Redis to create a unique key that indicates if an account is blocked for new transactions
+
+In this scenario, we can do two things:
+1. New transactions wait for the account to be unlocked
+2. New transactions are immediately rejected with code 07
+
+Below, you can see a simple diagram to illustrate the idea
+
 ## About
 
 This repository was created for the Caju technical challenge
