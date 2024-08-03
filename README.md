@@ -11,13 +11,15 @@
 
 ## How to use
 
-Just clone this repository and run it with docker compose, make sure if you have docker installed on your machine
+Simply clone this repository and run it using Docker Compose
 
-You can see documentation on link listed in [useful links](#useful-links) section
+Make sure Docker is installed on your machine
+
+You can find the documentation in the link listed in the [Useful Links](#useful-links) section
 
 ## Features
 
-You can validate a transaction (see documentation on [useful links](#useful-links) section) by sending:
+You can validate a transaction (see the documentation in the [Useful Links](#useful-links) section) by sending:
 
 ```
 POST /transactions/validate
@@ -30,7 +32,7 @@ POST /transactions/validate
 }
 ```
 
-Response status code always be `200 OK`, but with different codes:
+The response status code will always be `200 OK`, but with different codes:
 
 Approved:
 ```
@@ -49,7 +51,7 @@ Other problems:
 
 ## About
 
-This repository was made for Caju technical challenge
+This repository was created for the Caju technical challenge
 
 ## Useful links
 
