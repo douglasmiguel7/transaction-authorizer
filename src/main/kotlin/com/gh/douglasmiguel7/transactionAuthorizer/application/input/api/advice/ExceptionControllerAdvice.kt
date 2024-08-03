@@ -38,12 +38,12 @@ class ExceptionControllerAdvice {
   }
 
   @ExceptionHandler(MethodArgumentTypeMismatchException::class)
-  fun handleTypeMismatch(exception: MethodArgumentTypeMismatchException): ResponseEntity<ValidationErrorResponse> {
+  fun handleTypeMismatch(exception: MethodArgumentTypeMismatchException): ResponseEntity<List<ValidationErrorResponse>> {
     val response = ValidationErrorResponse(
       property = exception.name,
       cause = "invalid format"
     )
 
-    return ResponseEntity(response, HttpStatus.BAD_REQUEST)
+    return ResponseEntity(listOf(response), HttpStatus.BAD_REQUEST)
   }
 }
