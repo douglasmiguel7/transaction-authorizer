@@ -71,6 +71,7 @@ This repository was created for the Caju technical challenge
 ## Useful links
 
 Documentation: https://documenter.getpostman.com/view/1732601/2sA3rwMDsN
+
 Diagram: https://excalidraw.com/#json=Ghp-x1wkcCUIkPlJTHAP0,cZcDdm3P6iZaT_4J64pfyw
 
 ## Contact
